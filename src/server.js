@@ -11,6 +11,7 @@ const videos = require('./routes/videos');
 const gigs = require ('./routes/gigs');
 const concerts = require ('./routes/concerts');
 const connectionArtists = require('./routes/connectionArtists');
+const inscriptions = require('./routes/inscriptions');
 
 app.use(express.json());
 app.use(cors());
@@ -24,6 +25,7 @@ app.use('/video', videos);
 app.use('/gig', gigs);
 app.use('/concert', concerts)
 app.use('/connection-artist', connectionArtists);
+app.use('/inscription', inscriptions)
 
 const server = app.listen(PORT, () => {
     console.log(`🌍 Server is running on port ${PORT}`);

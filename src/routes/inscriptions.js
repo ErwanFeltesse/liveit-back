@@ -17,11 +17,11 @@ router.post('/', async (req, res) => {
       genre,
       img_url,
     } = req.body;
-    if (!nom || !mail || !mdp || !genre || img_url) {
+    if (!nom || !mail || !mdp || !genre || !img_url) {
       return res.status(403).send('Veuillez remplir tous les champs!');
     }
-    const existingUser = await queryAsync(query, mail);
-    if (existingUser[0]) {
+    const existingArtist = await queryAsync(query, mail);
+    if (existingArtist[0]) {
       return res.status(409).send('Artist already exists!');
     }
     const hash = bcrypt.hashSync(mdp, 10);

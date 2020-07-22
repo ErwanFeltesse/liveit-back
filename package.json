@@ -14,9 +14,12 @@
     "nodemon": "^2.0.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
+    "react-scripts": "3.4.1",
+    "yamljs": "^0.3.0"
   },
   "scripts": {
+    "start:server": "node src/server.js",
+    "start:server:watch": "nodemon -e yaml,js,json src/server.js",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

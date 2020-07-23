@@ -37,20 +37,16 @@ class VideoController {
     });
   }
   static async createOne(req, res) {
-    const {
-      titre,
-      genre,
-      url,
-    } = req.body;
+    const { artiste_id, titre, genre, url } = req.body;
     try {
-      if (!titre || !genre || !url) {
-        return res.status(403).send('Genre, titre and url must be provided');
+      if (!artiste_id || !titre || !genre || !url) {
+        return res.status(403).send('Please provide all fields');
       }
       const data = await VideoModel.createOne({
         ...req.body,
       });
       return res.status(201).json({
-        id: data.insertId,
+        data,
         ...req.body,
       });
     } catch (err) {

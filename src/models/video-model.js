@@ -1,12 +1,21 @@
 const connection = require('../../db');
-const ErrorCustom = require('../utils/ErrorCustom');
+const util= require('util');
+
+const queryAsync = util.promisify(connection.query).bind(connection);
 
 class VideoModel {
   constructor(videoData) {
     this.artiste_id = videoData.artiste_id;
     this.url= videoData.prenom
     this.genre = videoData.genre;
+    this.titre = videoData.titre
   }
+
+  static createOne(data){
+  const query = "INSERT INTO video SET ?";
+  return queryAsync(query, data);
+  }
+
 
   static getAll(callback) {
     connection.query('SELECT * from video', (error, results, fields) => {

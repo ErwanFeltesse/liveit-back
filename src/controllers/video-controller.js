@@ -1,6 +1,8 @@
 const VideoModel = require('../models/video-model');
 const ErrorCustom = require('../utils/ErrorCustom');
 
+
+
 class VideoController {
   static getAll(req, res, next) {
     VideoModel.getAll((error, results) => {
@@ -34,26 +36,29 @@ class VideoController {
       }
     });
   }
-
-  static createOne(req, res, next) {
-    if (!req.body) {
-      throw new ErrorCustom(400, 'Please fill all fields');
-    }
-    const video = new VideoModel(req.body);
+  static async createOne(req, res) {
+    const {
+      titre,
+      genre,
+      url,
+    } = req.body;
     try {
-      video.createOne((error, results) => {
-        res.status(201).json({
-          status: 'success',
-         videoCreated: {
-            id: results.insertId,
-            ...req.body,
-          },
-        });
+      if (!titre || !genre || !url) {
+        return res.status(403).send('Genre, titre and url must be provided');
+      }
+      const data = await VideoModel.createOne({
+        ...req.body,
+      });
+      return res.status(201).json({
+        id: data.insertId,
+        ...req.body,
       });
     } catch (err) {
-      res.send(err);
+      console.log(err);
+      return res.status(500).send('Something bad happened..');
     }
   }
+  
 
   static deleteOne(req, res, next) {
     const { id } = req.params;

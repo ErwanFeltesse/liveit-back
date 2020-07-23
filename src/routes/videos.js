@@ -11,4 +11,6 @@ router.get('/:id', VideoController.getOne);
 
 router.delete('/:id', VideoController.deleteOne);
 
+router.post('/', VideoController.createOne);
+
 module.exports = router;

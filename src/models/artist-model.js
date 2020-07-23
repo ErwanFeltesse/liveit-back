@@ -13,22 +13,23 @@ class ArtistModel {
   }
 
   static getAll(callback) {
-    connection.query('SELECT * from artist', (error, results, fields) => {
+    connection.query('SELECT * from artiste', (error, results, fields) => {
       callback(error, results);
     });
   }
 
   static getOne(id, callback) {
-    const query = 'SELECT * from artist WHERE id = ?';
+    const query = 'SELECT * from artiste WHERE id = ?';
     connection.query(query, id, (error, results) => {
       callback(error, results);
     });
+    
   }
 
 
 
   static deleteOne(id, callback) {
-    const query = 'DELETE FROM artist WHERE id = ?';
+    const query = 'DELETE FROM artiste WHERE id = ?';
     connection.query(query, id, (error, results) => {
       callback(error, results);
     });

@@ -32,7 +32,7 @@ class VideoModel {
                 ORDER BY date DESC`;
       }else if (genre) {
         query =`SELECT * FROM video
-                WHERE genre LIKE ${connection.escape(`%${titre}%`)}
+                WHERE genre LIKE ${connection.escape(`%${genre}%`)}
                 ORDER BY date DESC`;
       } else if (artiste_id) {
         query = `SELECT * FROM video 

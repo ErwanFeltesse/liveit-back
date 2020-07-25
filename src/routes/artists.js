@@ -11,4 +11,6 @@ router.get('/:id', ArtistController.getOne);
 
 router.delete('/:id', ArtistController.deleteOne);
 
+router.put('/:id', ArtistController.updateOne)
+
 module.exports = router;

@@ -2,13 +2,18 @@ const ArtistModel = require('../models/artist-model');
 const ErrorCustom = require('../utils/ErrorCustom');
 
 class ArtistController {
-  static getAll(req, res, next) {
-    ArtistModel.getAll((error, results) => {
-      res.status(200).json({
-        status: 'success',
-        results,
-      });
-    });
+
+  static async getAll(req, res, next) {
+    try{
+      const artistData = await ArtistModel.getAll(req.query)
+     if (artistData.length === 0) {
+       return res.status(404).send('Nothing Found !')
+     }
+      res.status(200).json(artistData)
+    } catch (error) {
+      console.log(error)
+      return res.status(500).send('Something bad happened...')
+    }
   }
 
   static getOne(req, res, next) {
@@ -35,26 +40,6 @@ class ArtistController {
     });
   }
 
-  static createOne(req, res, next) {
-    if (!req.body) {
-      throw new ErrorCustom(400, 'Please fill all fields');
-    }
-    const artist = new ArtistModel(req.body);
-    try {
-      artist.createOne((error, results) => {
-        res.status(201).json({
-          status: 'success',
-          userCreated: {
-            id: results.insertId,
-            ...req.body,
-          },
-        });
-      });
-    } catch (err) {
-      res.send(err);
-    }
-  }
-
   static deleteOne(req, res, next) {
     const { id } = req.params;
     ArtistModel.deleteOne(id, (error, results) => {
@@ -77,6 +62,23 @@ class ArtistController {
         });
       }
     });
+  }
+  static async updateOne(req, res, next) {
+    const { artiste_id, id} = req.params;
+    const { nom, mail, img_url, genre } = req.body;
+    try {
+      //check parameters - If not satisfying then throw a custom error handled (catched)
+      if (!nom && !mail && !img_url && !genre) {
+        return res.status(400).send("You must specify at least one field to modify")
+       
+      }
+      await ArtistModel.updateOne([req.body, id, artiste_id]);
+      res.status(201).json({ id: id, ...req.body });
+    } catch (err) {
+      // Log error in console for debug (or via a logger as Winston) then send to next middleware (aka errorHandler)
+      console.log(err);
+      next(err);
+    }
   }
 }
 

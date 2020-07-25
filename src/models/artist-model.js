@@ -1,5 +1,7 @@
 const connection = require('../../db');
-const ErrorCustom = require('../utils/ErrorCustom');
+const util= require('util');
+
+const queryAsync = util.promisify(connection.query).bind(connection);
 
 class ArtistModel {
   constructor(artistData) {
@@ -12,28 +14,29 @@ class ArtistModel {
 
   }
 
-  static getAll(callback) {
-    connection.query('SELECT * from artiste', (error, results, fields) => {
-      callback(error, results);
-    });
+  static async getAll(data) {
+    const query = "SELECT * FROM artiste";
+  return await queryAsync(query, data);
   }
 
-  static getOne(id, callback) {
-    const query = 'SELECT * from artiste WHERE id = ?';
-    connection.query(query, id, (error, results) => {
-      callback(error, results);
-    });
-    
+  static async getOne(id) {
+    const query = "SELECT * FROM artiste WHERE id = ?";
+    return await queryAsync(query, id);
   }
 
 
 
-  static deleteOne(id, callback) {
-    const query = 'DELETE FROM artiste WHERE id = ?';
-    connection.query(query, id, (error, results) => {
-      callback(error, results);
-    });
+  static async deleteOne(id) {
+    const query = "DELETE FROM artiste WHERE id = ?";
+    return await queryAsync(query, id);
   }
+  
+  static async updateOne(trackData) {
+  const query = "UPDATE artiste SET ? WHERE id = ?";
+  return await queryAsync(query, trackData);
 }
+}
+
+
 
 module.exports = ArtistModel;

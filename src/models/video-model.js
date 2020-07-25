@@ -17,23 +17,43 @@ class VideoModel {
   }
 
 
-  static getAll(callback) {
-    connection.query('SELECT * from video', (error, results, fields) => {
-      callback(error, results);
-    });
+  static async getAll(filters) {
+    let query = "SELECT * FROM video ORDER BY date DESC";
+    if (filters) {
+      const { genre, titre, artiste_id, id } = filters;
+      if (titre && artiste_id) {
+        query = `SELECT * FROM video 
+                WHERE titre LIKE ${connection.escape(`%${titre}%`)} 
+                AND artiste_id LIKE ${connection.escape(`${artiste_id}`)}
+                ORDER BY date DESC`;
+      } else if (titre) {
+        query = `SELECT * FROM video 
+                WHERE titre LIKE ${connection.escape(`%${titre}%`)} 
+                ORDER BY date DESC`;
+      }else if (genre) {
+        query =`SELECT * FROM video
+                WHERE genre LIKE ${connection.escape(`%${titre}%`)}
+                ORDER BY date DESC`;
+      } else if (artiste_id) {
+        query = `SELECT * FROM video 
+                WHERE artiste_id LIKE ${connection.escape(`${artiste_id}`)}
+                ORDER BY date DESC`;
+      } else if (id) {
+        query = `SELECT * FROM video 
+                WHERE id LIKE ${connection.escape(`${id}`)}`;
+      }
+    }
+    return await queryAsync(query);
   }
 
-  static getOne(id, callback) {
-    const query = 'SELECT * from video WHERE id = ?';
-    connection.query(query, id, (error, results) => {
-      callback(error, results);
-    });
+  static async getOne(id) {
+    const query = "SELECT * FROM video WHERE id = ?";
+    return await queryAsync(query, id);
   }
-   static deleteOne(id, callback) {
-    const query = 'DELETE FROM artist WHERE id = ?';
-    connection.query(query, id, (error, results) => {
-      callback(error, results);
-    });
+   
+  static async delete(id) {
+    const query = "DELETE FROM video WHERE id = ?";
+    return await queryAsync(query, id);
   }
 }
 

@@ -11,4 +11,6 @@ router.get("/:id", ConcertController.getOne);
 
 router.delete("/:id", ConcertController.deleteOne);
 
+router.post('/', ConcertController.createOne);
+
 module.exports = router;

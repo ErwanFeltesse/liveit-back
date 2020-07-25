@@ -2,13 +2,17 @@ const ConcertModel = require('../models/concert-model');
 const ErrorCustom = require('../utils/ErrorCustom');
 
 class ConcertController {
-  static getAll(req, res, next) {
-    ConcertModel.getAll((error, results) => {
-      res.status(200).json({
-        status: 'success',
-        results,
-      });
-    });
+  static async getAll(req, res, next) {
+    try{
+      const concertData = await ConcertModel.getAll(req.query)
+     if (concertData.length === 0) {
+       return res.status(404).send('Nothing Found !')
+     }
+      res.status(200).json(concertData)
+    } catch (error) {
+      console.log(error)
+      return res.status(500).send('Something bad happened...')
+    }
   }
 
   static getOne(req, res, next) {

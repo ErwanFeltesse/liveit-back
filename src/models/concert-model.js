@@ -5,7 +5,8 @@ const queryAsync = util.promisify(connection.query).bind(connection);
 
 class ConcertModel {
   constructor(concertData) {
-    this.date = concertData.date;
+    this.artiste_id = concertData.artiste_id
+    this.date_concert = concertData.date_concert;
     this.scene= concertData.scene;
     this.genre = concertData.genre;
     this.heure = concertData.heure
@@ -20,26 +21,26 @@ class ConcertModel {
   
   
     static async getAll(filters) {
-      let query = "SELECT * FROM concert ORDER BY date DESC";
+      let query = "SELECT * FROM concert ORDER BY date_concert DESC";
       if (filters) {
-        const { genre, scene, artiste_id, id, date } = filters;
+        const { genre, scene, artiste_id, id, date_concert } = filters;
         if (scene && artiste_id) {
           query = `SELECT * FROM concert 
                   WHERE scene LIKE ${connection.escape(`%${scene}%`)} 
                   AND artiste_id LIKE ${connection.escape(`${artiste_id}`)}
-                  ORDER BY date DESC`;
+                  ORDER BY date_concert DESC`;
         } else if (genre) {
           query = `SELECT * FROM concert 
                   WHERE genre LIKE ${connection.escape(`%${genre}%`)} 
-                  ORDER BY date DESC`;
-        }else if (date) {
+                  ORDER BY date_concert DESC`;
+        }else if (date_concert) {
           query =`SELECT * FROM concert
-                  WHERE date LIKE ${connection.escape(`%${date}%`)}
-                  ORDER BY date DESC`;
+                  WHERE date_concert LIKE ${connection.escape(`${date_concert}`)}
+                  ORDER BY date_concert DESC`;
         } else if (artiste_id) {
           query = `SELECT * FROM concert 
                   WHERE artiste_id LIKE ${connection.escape(`${artiste_id}`)}
-                  ORDER BY date DESC`;
+                  ORDER BY date_concert DESC`;
         } else if (id) {
           query = `SELECT * FROM concert 
                   WHERE id LIKE ${connection.escape(`${id}`)}`;

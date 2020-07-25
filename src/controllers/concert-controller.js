@@ -35,23 +35,22 @@ class ConcertController {
     });
   }
 
-  static createOne(req, res, next) {
-    if (!req.body) {
-      throw new ErrorCustom(400, 'Please fill all fields');
-    }
-    const concert = new ConcertModel(req.body);
+  static async createOne(req, res, next) {
+    const { artiste_id, scene, genre, heure, date_concert, adresse, ville } = req.body;
     try {
-      concert.createOne((error, results) => {
-        res.status(201).json({
-          status: 'success',
-         concertCreated: {
-            id: results.insertId,
-            ...req.body,
-          },
-        });
+      if (!artiste_id || !genre || !scene || !date_concert || !heure || !adresse ||!ville) {
+        return res.status(403).send('Please provide all fields');
+      }
+      const data = await ConcertModel.createOne({
+        ...req.body,
+      });
+      return res.status(201).json({
+        data,
+        ...req.body,
       });
     } catch (err) {
-      res.send(err);
+      console.log(err);
+      return res.status(500).send('Something bad happened..');
     }
   }
 

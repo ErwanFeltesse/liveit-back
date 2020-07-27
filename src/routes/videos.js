@@ -7,6 +7,8 @@ const VideoController = require('../controllers/video-controller');
 
 router.get('/', VideoController.getAll);
 
+router.get('/', VideoController.getAllForLib);
+
 router.get('/:id', VideoController.getOne);
 
 router.delete('/:id', VideoController.deleteOne);

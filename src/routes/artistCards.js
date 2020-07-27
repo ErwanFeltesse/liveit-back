@@ -5,6 +5,6 @@ const router = express.Router();
 
 const ArtistcardController = require('../controllers/artistCard-controller');
 
-router.get('/', ArtistcardController.getAll);
+router.get('/', ArtistcardController.getAllForLib);
 
 module.exports = router;

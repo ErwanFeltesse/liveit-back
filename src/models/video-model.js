@@ -16,6 +16,12 @@ class VideoModel {
   return queryAsync(query, data);
   }
 
+ static async getAllForLib(data) {
+let query = "SELECT video.titre, video.date, video.url, video.genre, artiste.nom FROM video LEFT JOIN artiste ON artiste.id= video.artiste_id ORDER BY date DESC"
+return await queryAsync(query, data);
+}
+
+
 
   static async getAll(filters) {
     let query = "SELECT * FROM video ORDER BY date DESC";

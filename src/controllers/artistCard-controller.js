@@ -3,9 +3,9 @@ const ErrorCustom = require('../utils/ErrorCustom');
 
 class ArtistCardController {
 
-  static async getAll(req, res, next) {
+  static async getAllForLib(req, res, next) {
     try{
-      const artistCardData = await ArtistCardModel.getAll(req.query)
+      const artistCardData = await ArtistCardModel.getAllForLib(req.query)
      if (artistCardData.length === 0) {
        return res.status(404).send('Nothing Found !')
      }

@@ -34,10 +34,15 @@ from             `ecrivains` as tb1
 right outer join `livres`    as tb2
 on tb2.clef = tb1.clef */
   
-    static async getAll(data) {
+/*     static async getAll(data) {
         let query = "SELECT artiste.nom , artiste.genre, artiste.img_url, artiste.description, video.titre, video.date, video.url,video.genre, concert.scene, concert.date_concert, concert.heure, concert.ville, concert.adresse, concert.genre_concert FROM artiste LEFT JOIN video ON video.artiste_id = artiste.id LEFT JOIN concert ON concert.artiste_id= artiste.id";
      return await queryAsync(query, data);
     }
+} */
+static async getAllForLib(data) {
+  let query = "SELECT video.titre, video.date, video.url, video.genre, artiste.nom FROM video LEFT JOIN artiste ON artiste.id= video.artiste_id ORDER BY date DESC"
+  return await queryAsync(query, data);
+  }
 }
 
     module.exports = ArtistCardModel;

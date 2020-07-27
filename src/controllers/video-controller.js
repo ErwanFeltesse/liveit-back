@@ -4,13 +4,28 @@ const ErrorCustom = require('../utils/ErrorCustom');
 
 
 class VideoController {
+
+  static async getAllForLib(req, res, next) {
+    try{
+      const artistCardData = await VideoModel.getAllForLib(req.query)
+     if (artistCardData.length === 0) {
+       return res.status(404).send('Nothing Found !')
+     }
+      res.status(200).json(artistCardData)
+    } catch (error) {
+      console.log(error)
+      return res.status(500).send('Something bad happened...')
+    }
+  }
+
+
   static async getAll(req, res, next) {
     const {idArtiste} = req.params;
     try{
       let videoData 
       if(!idArtiste){
         videoData= await VideoModel.getAll(req.query)
-      } else {videoData = await VideoModel.getAllForArtists(req.query) }
+      } else {videoData = await VideoModel.getAllForL(req.query) }
      if (videoData.length === 0) {
        return res.status(404).send('Nothing Found !')
      }

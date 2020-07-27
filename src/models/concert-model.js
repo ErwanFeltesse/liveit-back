@@ -55,7 +55,7 @@ class ConcertModel {
     }
      
     static deleteOne(id, callback) {
-      const query = 'DELETE FROM video WHERE id = ?';
+      const query = 'DELETE FROM concert WHERE id = ?';
       connection.query(query, id, (error, results) => {
         callback(error, results);
       });

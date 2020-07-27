@@ -13,6 +13,7 @@ const concerts = require ('./routes/concerts');
 const connectionArtists = require('./routes/connectionArtists');
 const inscriptions = require('./routes/inscriptions');
 const artistCards = require('./routes/artistCards');
+const concertCards = require ('routes/concertCards')
 
 app.use(express.json());
 app.use(cors());
@@ -28,6 +29,7 @@ app.use('/concert', concerts);
 app.use('/connection-artist', connectionArtists);
 app.use('/inscription', inscriptions);
 app.use('/artistcard', artistCards);
+app.use('/concert-card', concertCards)
 
 const server = app.listen(PORT, () => {
     console.log(`🌍 Server is running on port ${PORT}`);

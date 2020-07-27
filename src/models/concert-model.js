@@ -54,9 +54,11 @@ class ConcertModel {
       return await queryAsync(query, id);
     }
      
-    static async delete(id) {
-      const query = "DELETE FROM concert WHERE id = ?";
-      return await queryAsync(query, id);
+    static deleteOne(id, callback) {
+      const query = 'DELETE FROM video WHERE id = ?';
+      connection.query(query, id, (error, results) => {
+        callback(error, results);
+      });
     }
   }
 module.exports = ConcertModel;

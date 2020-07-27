@@ -40,9 +40,9 @@ class ConcertController {
   }
 
   static async createOne(req, res, next) {
-    const { artiste_id, scene, genre, heure, date_concert, adresse, ville } = req.body;
+    const { artiste_id, scene, genre_concert, heure, date_concert, adresse, ville } = req.body;
     try {
-      if (!artiste_id || !genre || !scene || !date_concert || !heure || !adresse ||!ville) {
+      if (!artiste_id || !genre_concert || !scene || !date_concert || !heure || !adresse ||!ville) {
         return res.status(403).send('Please provide all fields');
       }
       const data = await ConcertModel.createOne({

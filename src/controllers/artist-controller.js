@@ -15,54 +15,37 @@ class ArtistController {
       return res.status(500).send('Something bad happened...')
     }
   }
-
-  static getOne(req, res, next) {
+  static async getOne(req, res, next) {
     const { id } = req.params;
-    ArtistModel.getOne(id, (error, results) => {
-      try {
-        if (results.length === 0) {
-          res.status(404).json({
-            status: 'error',
-            errorMessage: 'Not found',
-          });
-        } else {
-          res.status(200).json({
-            status: 'success',
-            results: results[0],
-          });
-        }
-      } catch (err) {
-        res.status(500).json({
-          status: 'error',
-          errorMessage: 'Our server encountered an error performing the request',
-        });
+    try {
+      const data = await ArtistModel.getOne(id);
+      // check if content in data - If not then throw 404 error
+      if (data.length === 0) {
+        return res.status(404).send('Nothing Found !')
       }
-    });
+      res.status(200).json(data[0]);
+    } catch (err) {
+      // Log error in console for debug (or via a logger as Winston) then send to next middleware (aka errorHandler)
+      console.log(err);
+      next(err);
+    }
   }
 
-  static deleteOne(req, res, next) {
-    const { id } = req.params;
-    ArtistModel.deleteOne(id, (error, results) => {
-      try {
-        if (!id) {
-          res.status(404).json({
-            status: 'error',
-            errorMessage: 'Id not found',
-          });
-        } else {
-          res.status(201).json({
-            status: 'success',
-            artistDeleted: id,
-          });
-        }
-      } catch (err) {
-        res.status(500).json({
-          status: 'error',
-          errorMessage: 'Our server encountered an error performing the request',
-        });
+ 
+  static async deleteOne(req, res, next) {
+    const { id } = req.query;
+    try {
+      const data = await ArtistModel.deleteOne(id);
+      if (data.affectedRows === 0) {
+        return res.status(404).send('No resource to delete at this id');
       }
-    });
+      res.status(204).send('Artist correctly deleted');
+    } catch (err) {
+      console.log(err);
+      return res.status(500).send('Something bad happened...');
+    }
   }
+  
   static async updateOne(req, res, next) {
     const { artiste_id, id} = req.params;
     const { nom, mail, img_url, genre } = req.body;

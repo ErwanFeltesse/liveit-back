@@ -5,8 +5,12 @@ const ErrorCustom = require('../utils/ErrorCustom');
 
 class VideoController {
   static async getAll(req, res, next) {
+    const {idArtiste} = req.params;
     try{
-      const videoData = await VideoModel.getAll(req.query)
+      let videoData 
+      if(!idArtiste){
+        videoData= await VideoModel.getAll(req.query)
+      } else {videoData = await VideoModel.getAllForArtists(req.query) }
      if (videoData.length === 0) {
        return res.status(404).send('Nothing Found !')
      }
@@ -82,7 +86,6 @@ class VideoController {
         });
       }
     });
-  }
-}
+}}
 
 module.exports = VideoController;

@@ -6,7 +6,6 @@ const queryAsync = util.promisify(connection.query).bind(connection);
 class ArtistModel {
   constructor(artistData) {
     this.nom = artistData.nom;
-    this.prenom= artistData.prenom
     this.mail = artistData.mail;
     this.mdp = artistData.mdp;
     this.genre = artistData.genre;
@@ -15,16 +14,14 @@ class ArtistModel {
   }
 
   static async getAll(data) {
-    const query = "SELECT * FROM artiste";
+    let query = "SELECT * FROM artiste";
   return await queryAsync(query, data);
   }
 
   static async getOne(id) {
-    const query = "SELECT * FROM artiste WHERE id = ?";
+    let query = "SELECT * FROM artiste WHERE id = ?";
     return await queryAsync(query, id);
   }
-
-
 
   static async deleteOne(id) {
     const query = "DELETE FROM artiste WHERE id = ?";

@@ -13,7 +13,7 @@ const concerts = require ('./routes/concerts');
 const connectionArtists = require('./routes/connectionArtists');
 const inscriptions = require('./routes/inscriptions');
 const artistCards = require('./routes/artistCards');
-const concertCards = require ('routes/concertCards')
+const concertCards = require ('./routes/concertCards')
 
 app.use(express.json());
 app.use(cors());

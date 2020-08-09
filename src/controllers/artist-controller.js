@@ -33,7 +33,7 @@ class ArtistController {
 
  
   static async deleteOne(req, res, next) {
-    const { id } = req.query;
+    const { id } = req.params;
     try {
       const data = await ArtistModel.deleteOne(id);
       if (data.affectedRows === 0) {

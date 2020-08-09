@@ -3,7 +3,7 @@ const cors = require('cors');
 
 
 const app = express();
-const PORT = process.env.PORT || (process.env.NODE_ENV === 'test' ? 3001 : 4000);
+const PORT = process.env.PORT || (process.env.NODE_ENV === 'test' ? 3001 : 5000);
 
 //import des routes
 const artists = require('./routes/artists');

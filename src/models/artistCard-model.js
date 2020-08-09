@@ -13,7 +13,7 @@ class ArtistCardModel {
       this.img_url =artistCardData.img_url;
       this.titre = artistCardData.titre;
       this.url = artistCardData.url;
-      this.date = artistCardData.date;
+      this.date_video = artistCardData.date_video;
       this.adresse = artistCardData.adresse;
       this.scene = artistCardData.scene;
       this.ville = artistCardData.ville;
@@ -40,7 +40,7 @@ on tb2.clef = tb1.clef */
     }
 } */
 static async getAllForLib(data) {
-  let query = "SELECT video.titre, video.date, video.url, video.genre, artiste.nom FROM video LEFT JOIN artiste ON artiste.id= video.artiste_id ORDER BY date DESC"
+  let query = "SELECT video.titre, video.date_video, video.url, video.genre, artiste.nom FROM video LEFT JOIN artiste ON artiste.id= video.artiste_id ORDER BY date_video DESC"
   return await queryAsync(query, data);
   }
 }

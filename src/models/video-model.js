@@ -19,26 +19,26 @@ class VideoModel {
 
 
   static async getAll(filters) {
-    let query = "SELECT * FROM video ORDER BY date DESC";
+    let query = "SELECT * FROM video ORDER BY date_video DESC";
     if (filters) {
       const { genre, titre, artiste_id, id } = filters;
       if (titre && artiste_id) {
         query = `SELECT * FROM video 
                 WHERE titre LIKE ${connection.escape(`%${titre}%`)} 
                 AND artiste_id LIKE ${connection.escape(`${artiste_id}`)}
-                ORDER BY date DESC`;
+                ORDER BY date_video DESC`;
       } else if (titre) {
         query = `SELECT * FROM video 
                 WHERE titre LIKE ${connection.escape(`%${titre}%`)} 
-                ORDER BY date DESC`;
+                ORDER BY date_video DESC`;
       }else if (genre) {
         query =`SELECT * FROM video
                 WHERE genre LIKE ${connection.escape(`%${genre}%`)}
-                ORDER BY date DESC`;
+                ORDER BY date_video DESC`;
       } else if (artiste_id) {
         query = `SELECT * FROM video 
                 WHERE artiste_id LIKE ${connection.escape(`${artiste_id}`)}
-                ORDER BY date DESC`;
+                ORDER BY date_video DESC`;
       } else if (id) {
         query = `SELECT * FROM video 
                 WHERE id LIKE ${connection.escape(`${id}`)}`;
@@ -48,26 +48,26 @@ class VideoModel {
   }
 
   static async getAllForArtists(filters, artiste) {
-    let query = "SELECT * FROM video WHERE artist_id =?ORDER BY date DESC";
+    let query = "SELECT * FROM video WHERE artist_id =?ORDER BY date_video DESC";
     if (filters) {
       const { genre, titre, artiste_id, id } = filters;
       if (titre && artiste_id) {
         query = `SELECT * FROM video 
                 WHERE titre LIKE ${connection.escape(`%${titre}%`)} 
                 AND artiste_id LIKE ${connection.escape(`${artiste_id}`)}
-                ORDER BY date DESC`;
+                ORDER BY date_video DESC`;
       } else if (titre) {
         query = `SELECT * FROM video 
                 WHERE titre LIKE ${connection.escape(`%${titre}%`)} 
-                ORDER BY date DESC`;
+                ORDER BY date_video DESC`;
       }else if (genre) {
         query =`SELECT * FROM video
                 WHERE genre LIKE ${connection.escape(`%${genre}%`)}
-                ORDER BY date DESC`;
+                ORDER BY date_video DESC`;
       } else if (artiste_id) {
         query = `SELECT * FROM video 
                 WHERE artiste_id LIKE ${connection.escape(`${artiste_id}`)}
-                ORDER BY date DESC`;
+                ORDER BY date_video DESC`;
       } else if (id) {
         query = `SELECT * FROM video 
                 WHERE id LIKE ${connection.escape(`${id}`)}`;
